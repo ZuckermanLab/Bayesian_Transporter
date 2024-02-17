@@ -1,0 +1,25 @@
+data format: [[H_out_conc_stage1, S_out_conc_stage1],[H_out_conc_stage2, S_out_conc_stage2],...,[H_out_conc_stageN, S_out_conc_stageN]]
+
+model1_experiment1
+buffer_concentration_sequence: [[1.e-7,1.e-3],[0.5e-7,1.0e-3],[1.e-7,1.e-3],]
+
+model1_experiment2
+buffer_concentration_sequence: [[1.e-7,1.e-3],[0.5e-7,0.353e-3],[1.e-7,1.e-3],]
+
+model1_experiment3
+buffer_concentration_sequence: [[1.e-7,1.e-3],[0.5e-7,0.5e-3],[1.e-7,1.e-3],]
+
+model1_experiment4
+buffer_concentration_sequence: [[1.e-7,1.e-3],[0.5e-7,0.25e-3],[1.e-7,1.e-3],]
+
+model1_experiment1x2
+buffer_concentration_sequence: [[1.e-7,1.e-3],[0.5e-7,1.0e-3],[1.e-7,1.e-3],[0.5e-7,1.0e-3],[1.e-7,1.e-3]]
+
+model1_experiment1x4
+buffer_concentration_sequence: [[1.e-7,1.e-3],[0.5e-7,1.0e-3],[1.e-7,1.e-3],[0.5e-7,1.0e-3],[1.e-7,1.e-3],[0.5e-7,1.0e-3],[1.e-7,1.e-3],[0.5e-7,1.0e-3],[1.e-7,1.e-3]]
+
+model1_experiment1and2
+buffer_concentration_sequence: [[1.e-7,1.e-3],[0.5e-7,1.0e-3],[1.e-7,1.e-3],[0.5e-7,0.353e-3],[1.e-7,1.e-3],]
+
+model1_experiment1and2and3and4
+buffer_concentration_sequence: [[1.e-7,1.e-3],[0.5e-7,1.0e-3],[1.e-7,1.e-3],[0.5e-7,0.5e-3],[1.e-7,1.e-3],[0.5e-7,0.353e-3],[1.e-7,1.e-3],[0.5e-7,0.25e-3],[1.e-7,1.e-3],]

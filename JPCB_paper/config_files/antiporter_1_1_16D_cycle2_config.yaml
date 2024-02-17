@@ -1,19 +1,18 @@
-run_name: "antiporter_1_1_12D_cycle1_experiment1_0v"
-data_file: "./example/model1_experiment1_current_trace.csv"
-model_file: "./example/antiporter_1_1_cycle1_0v_SBML.xml"
+run_name: ""
+data_file: ""
+model_file: ""
 random_seed: 42
 
 solver_arguments:
   buffer_species_names: ["conc_H_out", "conc_S_out"]
-  buffer_concentration_sequence: [[1.e-7,1.e-3],[0.5e-7,1.0e-3],[1.e-7,1.e-3], 
-                              ]
+  buffer_concentration_sequence: []
   buffer_concentration_scale: [1,1]
   time_per_stage: 1
   n_points_per_stage: 200
   remove_first_n: 1
   remove_after_n: 100
   rate_constant_names: ["k1_f_0", "k1_r_0", "k2_f_0", "k2_r_0", "k3_f_0", "k3_r_0", "k4_f_0", "k4_r_0", "k5_f_0", "k5_r_0", "k6_f_0"]
-  species_labels: ["conc_OF", "conc_OF_Hb", "conc_IF_Hb", "conc_IF_Hb_Sb", "conc_IF_Sb", "conc_OF_Sb", "conc_H_in", "conc_S_in"]
+  species_labels: ["conc_OF_Hb_Sb", "conc_OF_Hb", "conc_IF_Hb", "conc_IF_Hb_Sb", "conc_IF_Sb", "conc_OF_Sb", "conc_H_in", "conc_S_in"]
   species_initial_concentrations: [ 0.0004369941792375325, 0, 0, 0, 0, 0, 1.e-7, 1.e-3]
   species_initial_concentrations_scale: [1, 1, 1, 1, 1, 1, 1, 1]
   solver_absolute_tolerance: 1.e-15
@@ -22,14 +21,14 @@ solver_arguments:
 
 
 bayesian_inference:
-  extended: False
+  extended: True
   parameters:
     - name: "log10_k1_f"
-      bounds: [6.0,12]
-      nominal: 10
-    - name: "log10_k1_r"
       bounds: [-1, 5]
       nominal: 3
+    - name: "log10_k1_r"
+      bounds: [3,9]
+      nominal: 7
     - name: "log10_k2_f"
       bounds: [-2, 4]
       nominal: 2
@@ -55,12 +54,24 @@ bayesian_inference:
       bounds: [-2,4]
       nominal: 2
     - name: "log10_k6_f"
-      bounds: [-1,5]
-      nominal: 3
+      bounds: [6,12]
+      nominal: 10
+    - name: "H_out_scale"
+      bounds: [0.8,1.2]
+      nominal: 1
+    - name: "S_out_scale"
+      bounds: [0.8,1.2]
+      nominal: 1
+    - name: "protein_conc_scale"
+      bounds: [0.8,1.2]
+      nominal: 1
+    - name: "bias_scale"
+      bounds: [0.8,1.2]
+      nominal: 1
     - name: "log10_sigma"
       bounds: [-11, -9]
       nominal: -10.5
-      
+
   mcmc_algorithm: "pocomc" # "pocomc" or "emcee"
   mcmc_algorithm_arguments:
     n_walkers: 1000
@@ -75,6 +86,7 @@ bayesian_inference:
 optimization:
   tuning: True
   n_tuning_steps: 10
-  method: "direct" 
+  method: "differential_evolution" 
   n_replicas: 10
+
 

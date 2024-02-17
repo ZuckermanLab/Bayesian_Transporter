@@ -1,0 +1,1159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" level="3" version="1">
+  <model metaid="antiporter_1_1_cycle1" id="antiporter_1_1_cycle1" substanceUnits="substance" timeUnits="time_unit" volumeUnits="volume" areaUnits="area" lengthUnits="length" extentUnits="extent">
+    <listOfUnitDefinitions>
+      <unitDefinition id="substance_per_volume">
+        <listOfUnits>
+          <unit kind="mole" exponent="1" scale="0" multiplier="1"/>
+          <unit kind="litre" exponent="-1" scale="0" multiplier="1"/>
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition id="volume">
+        <listOfUnits>
+          <unit kind="litre" exponent="1" scale="0" multiplier="1"/>
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition id="length">
+        <listOfUnits>
+          <unit kind="metre" exponent="1" scale="0" multiplier="1"/>
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition id="area">
+        <listOfUnits>
+          <unit kind="metre" exponent="2" scale="0" multiplier="1"/>
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition id="time_unit" name="time">
+        <listOfUnits>
+          <unit kind="second" exponent="1" scale="0" multiplier="1"/>
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition id="substance">
+        <listOfUnits>
+          <unit kind="mole" exponent="1" scale="0" multiplier="1"/>
+        </listOfUnits>
+      </unitDefinition>
+      <unitDefinition id="extent">
+        <listOfUnits>
+          <unit kind="mole" exponent="1" scale="0" multiplier="1"/>
+        </listOfUnits>
+      </unitDefinition>
+    </listOfUnitDefinitions>
+    <listOfCompartments>
+      <compartment sboTerm="SBO:0000410" id="default_compartment" spatialDimensions="3" size="1" constant="true"/>
+    </listOfCompartments>
+    <listOfSpecies>
+      <species id="conc_H_out" compartment="default_compartment" initialConcentration="1e-07" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="conc_S_out" compartment="default_compartment" initialConcentration="0.001" hasOnlySubstanceUnits="false" boundaryCondition="true" constant="false"/>
+      <species id="conc_H_in" compartment="default_compartment" initialAmount="1e-07" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="conc_S_in" compartment="default_compartment" initialAmount="0.001" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="conc_OF" compartment="default_compartment" initialAmount="0.000436994179237532" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="conc_OF_Hb" compartment="default_compartment" initialAmount="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="conc_IF_Hb" compartment="default_compartment" initialAmount="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="conc_IF_Hb_Sb" compartment="default_compartment" initialAmount="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="conc_IF_Sb" compartment="default_compartment" initialAmount="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="conc_OF_Sb" compartment="default_compartment" initialAmount="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+      <species id="conc_OF_Hb_Sb" compartment="default_compartment" initialAmount="0" hasOnlySubstanceUnits="false" boundaryCondition="false" constant="false"/>
+    </listOfSpecies>
+    <listOfParameters>
+      <parameter id="elem_charge" value="1.602e-19" constant="true"/>
+      <parameter id="N_av" value="6.022e+23" constant="true"/>
+      <parameter id="F" value="96485" constant="true"/>
+      <parameter id="R" value="8.314" constant="true"/>
+      <parameter id="T" value="298.15" constant="true"/>
+      <parameter id="n_liposomes" value="100000000000" constant="false"/>
+      <parameter id="multimeric_state" value="2" constant="false"/>
+      <parameter id="n_transporters" value="5000000000000" constant="false"/>
+      <parameter id="C_m_per_liposome" value="2.3561925e-16" constant="false"/>
+      <parameter id="V_scale" value="1" constant="false"/>
+      <parameter id="n_transporters_per_liposome" value="50" constant="false"/>
+      <parameter id="C_m_tot" value="2.3561925e-05" constant="false"/>
+      <parameter id="v_out_tot" value="7e-05" constant="true"/>
+      <parameter id="v_m_tot" value="1.9e-08" constant="true"/>
+      <parameter id="v_in_tot" value="7e-08" constant="true"/>
+      <parameter id="v_out_lipo" value="7e-16" constant="false"/>
+      <parameter id="v_m_lipo" value="1.9e-19" constant="false"/>
+      <parameter id="v_in_lipo" value="7e-19" constant="false"/>
+      <parameter id="conc_H_out_0" value="1e-07" constant="true"/>
+      <parameter id="conc_S_out_0" value="0.001" constant="true"/>
+      <parameter id="conc_H_in_0" value="1e-07" constant="true"/>
+      <parameter id="conc_S_in_0" value="0.001" constant="true"/>
+      <parameter id="mol_transporters_tot_0" value="8.30288940551312e-12" constant="false"/>
+      <parameter id="mol_transporters_lipo_0" value="8.30288940551312e-23" constant="false"/>
+      <parameter id="conc_transporters_tot_0" value="0.000436994179237533" constant="false"/>
+      <parameter id="conc_transporters_lipo_0" value="0.000436994179237532" constant="false"/>
+      <parameter id="k1_f" value="10000000000" constant="false"/>
+      <parameter id="k1_r" value="1000" constant="false"/>
+      <parameter id="k2_f" value="100" constant="false"/>
+      <parameter id="k2_r" value="100" constant="false"/>
+      <parameter id="k3_f" value="10000000" constant="false"/>
+      <parameter id="k3_r" value="1000" constant="false"/>
+      <parameter id="k4_f" value="1000" constant="false"/>
+      <parameter id="k4_r" value="10000000000" constant="false"/>
+      <parameter id="k5_f" value="100" constant="false"/>
+      <parameter id="k5_r" value="100" constant="false"/>
+      <parameter id="k6_f" value="1000" constant="false"/>
+      <parameter id="k6_r" value="10000000" constant="false"/>
+      <parameter id="k7_f" value="10000000000" constant="false"/>
+      <parameter id="k7_r" value="1000" constant="false"/>
+      <parameter id="k8_f" value="1000" constant="false"/>
+      <parameter id="k8_r" value="10000000" constant="false"/>
+      <parameter id="k1_f_0" value="10000000000" constant="true"/>
+      <parameter id="k1_r_0" value="1000" constant="true"/>
+      <parameter id="k2_f_0" value="100" constant="true"/>
+      <parameter id="k2_r_0" value="100" constant="true"/>
+      <parameter id="k3_f_0" value="10000000" constant="true"/>
+      <parameter id="k3_r_0" value="1000" constant="true"/>
+      <parameter id="k4_f_0" value="1000" constant="true"/>
+      <parameter id="k4_r_0" value="10000000000" constant="true"/>
+      <parameter id="k5_f_0" value="100" constant="true"/>
+      <parameter id="k5_r_0" value="100" constant="true"/>
+      <parameter id="k6_f_0" value="1000" constant="true"/>
+      <parameter id="k7_f_0" value="10000000000" constant="true"/>
+      <parameter id="k8_f_0" value="1000" constant="true"/>
+      <parameter id="k8_r_0" value="10000000" constant="true"/>
+      <parameter id="eps1_f" value="0" constant="true"/>
+      <parameter id="eps1_r" value="0" constant="true"/>
+      <parameter id="eps2_f" value="0" constant="true"/>
+      <parameter id="eps2_r" value="0" constant="true"/>
+      <parameter id="eps3_f" value="0" constant="true"/>
+      <parameter id="eps3_r" value="0" constant="true"/>
+      <parameter id="eps4_f" value="1" constant="true"/>
+      <parameter id="eps4_r" value="-1" constant="true"/>
+      <parameter id="eps5_f" value="0" constant="true"/>
+      <parameter id="eps5_r" value="0" constant="true"/>
+      <parameter id="eps6_f" value="0" constant="true"/>
+      <parameter id="eps6_r" value="0" constant="true"/>
+      <parameter id="eps7_f" value="0" constant="true"/>
+      <parameter id="eps7_r" value="0" constant="true"/>
+      <parameter id="eps8_f" value="0" constant="true"/>
+      <parameter id="eps8_r" value="0" constant="true"/>
+      <parameter id="k1_f_v" value="1" constant="false"/>
+      <parameter id="V_t" value="0" constant="false"/>
+      <parameter id="k1_r_v" value="1" constant="false"/>
+      <parameter id="k2_f_v" value="1" constant="false"/>
+      <parameter id="k2_r_v" value="1" constant="false"/>
+      <parameter id="k3_f_v" value="1" constant="false"/>
+      <parameter id="k3_r_v" value="1" constant="false"/>
+      <parameter id="k4_f_v" value="1" constant="false"/>
+      <parameter id="k4_r_v" value="1" constant="false"/>
+      <parameter id="k5_f_v" value="1" constant="false"/>
+      <parameter id="k5_r_v" value="1" constant="false"/>
+      <parameter id="k6_f_v" value="1" constant="false"/>
+      <parameter id="k6_r_v" value="1" constant="false"/>
+      <parameter id="k7_f_v" value="1" constant="false"/>
+      <parameter id="k7_r_v" value="1" constant="false"/>
+      <parameter id="k8_f_v" value="1" constant="false"/>
+      <parameter id="k8_r_v" value="1" constant="false"/>
+      <parameter id="net_molar_concentration_ion_influx" value="0" constant="false"/>
+      <parameter id="I_t_per_liposome" value="0" constant="false"/>
+      <parameter id="Q_t_per_liposome" value="0" constant="false"/>
+      <parameter id="V_t_per_liposome" value="0" constant="false"/>
+      <parameter id="I_t_total" value="0" constant="false"/>
+      <parameter id="Q_t_total" value="0" constant="false"/>
+      <parameter id="V_t_total" value="0" constant="false"/>
+      <parameter id="I_t" value="0" constant="false"/>
+      <parameter id="transporter_amount" value="8.30288940551312e-23" constant="false"/>
+      <parameter id="H_conc_ratio" value="1" constant="false"/>
+      <parameter id="S_conc_ratio" value="1" constant="false"/>
+    </listOfParameters>
+    <listOfInitialAssignments>
+      <initialAssignment symbol="conc_H_out">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <ci> conc_H_out_0 </ci>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="conc_S_out">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <ci> conc_S_out_0 </ci>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="conc_H_in">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <ci> conc_H_in_0 </ci>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="conc_S_in">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <ci> conc_S_in_0 </ci>
+        </math>
+      </initialAssignment>
+      <initialAssignment symbol="conc_OF">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <ci> conc_transporters_lipo_0 </ci>
+        </math>
+      </initialAssignment>
+    </listOfInitialAssignments>
+    <listOfRules>
+      <assignmentRule variable="n_transporters">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <cn> 10000000000000 </cn>
+            <ci> multimeric_state </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="C_m_per_liposome">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <cn type="e-notation"> 2.3561925 <sep/> -16 </cn>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="n_transporters_per_liposome">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <ci> n_transporters </ci>
+            <ci> n_liposomes </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="C_m_tot">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <ci> C_m_per_liposome </ci>
+            <ci> n_liposomes </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="v_out_lipo">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <ci> v_out_tot </ci>
+            <ci> n_liposomes </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="v_m_lipo">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <ci> v_m_tot </ci>
+            <ci> n_liposomes </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="v_in_lipo">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <ci> v_in_tot </ci>
+            <ci> n_liposomes </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="mol_transporters_tot_0">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <ci> n_transporters </ci>
+            <ci> N_av </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="mol_transporters_lipo_0">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <ci> n_transporters_per_liposome </ci>
+            <ci> N_av </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="conc_transporters_tot_0">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <ci> mol_transporters_tot_0 </ci>
+            <ci> v_m_tot </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="conc_transporters_lipo_0">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <ci> mol_transporters_lipo_0 </ci>
+            <ci> v_m_lipo </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="k1_f">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <ci> k1_f_0 </ci>
+            <ci> k1_f_v </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="k1_r">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <ci> k1_r_0 </ci>
+            <ci> k1_r_v </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="k2_f">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <ci> k2_f_0 </ci>
+            <ci> k2_f_v </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="k2_r">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <ci> k2_r_0 </ci>
+            <ci> k2_r_v </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="k3_f">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <ci> k3_f_0 </ci>
+            <ci> k3_f_v </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="k3_r">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <ci> k3_r_0 </ci>
+            <ci> k3_r_v </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="k4_f">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <ci> k4_f_0 </ci>
+            <ci> k4_f_v </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="k4_r">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <ci> k4_r_0 </ci>
+            <ci> k4_r_v </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="k5_f">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <ci> k5_f_0 </ci>
+            <ci> k5_f_v </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="k5_r">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <ci> k5_r_0 </ci>
+            <ci> k5_r_v </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="k6_f">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <ci> k6_f_0 </ci>
+            <ci> k6_f_v </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="k6_r">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <apply>
+              <times/>
+              <ci> k1_f </ci>
+              <ci> k2_f </ci>
+              <ci> k3_f </ci>
+              <ci> k4_f </ci>
+              <ci> k5_f </ci>
+              <ci> k6_f </ci>
+            </apply>
+            <apply>
+              <times/>
+              <ci> k1_r </ci>
+              <ci> k2_r </ci>
+              <ci> k3_r </ci>
+              <ci> k4_r </ci>
+              <ci> k5_r </ci>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="k7_f">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <ci> k7_f_0 </ci>
+            <ci> k7_f_v </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="k7_r">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <apply>
+              <times/>
+              <ci> k8_f </ci>
+              <ci> k2_f </ci>
+              <ci> k3_f </ci>
+              <ci> k4_f </ci>
+              <ci> k5_f </ci>
+              <ci> k7_f </ci>
+            </apply>
+            <apply>
+              <times/>
+              <ci> k8_r </ci>
+              <ci> k2_r </ci>
+              <ci> k3_r </ci>
+              <ci> k4_r </ci>
+              <ci> k5_r </ci>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="k8_f">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <ci> k8_f_0 </ci>
+            <ci> k8_f_v </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="k8_r">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <ci> k8_r_0 </ci>
+            <ci> k8_r_v </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="k1_f_v">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <exp/>
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <minus/>
+                  <ci> eps1_f </ci>
+                </apply>
+                <ci> F </ci>
+                <ci> V_t </ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci> R </ci>
+                <ci> T </ci>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="V_t">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <cn type="integer"> 0 </cn>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="k1_r_v">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <exp/>
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <minus/>
+                  <ci> eps1_r </ci>
+                </apply>
+                <ci> F </ci>
+                <ci> V_t </ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci> R </ci>
+                <ci> T </ci>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="k2_f_v">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <exp/>
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <minus/>
+                  <ci> eps2_f </ci>
+                </apply>
+                <ci> F </ci>
+                <ci> V_t </ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci> R </ci>
+                <ci> T </ci>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="k2_r_v">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <exp/>
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <minus/>
+                  <ci> eps2_r </ci>
+                </apply>
+                <ci> F </ci>
+                <ci> V_t </ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci> R </ci>
+                <ci> T </ci>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="k3_f_v">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <exp/>
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <minus/>
+                  <ci> eps3_f </ci>
+                </apply>
+                <ci> F </ci>
+                <ci> V_t </ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci> R </ci>
+                <ci> T </ci>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="k3_r_v">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <exp/>
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <minus/>
+                  <ci> eps3_r </ci>
+                </apply>
+                <ci> F </ci>
+                <ci> V_t </ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci> R </ci>
+                <ci> T </ci>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="k4_f_v">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <exp/>
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <minus/>
+                  <ci> eps4_f </ci>
+                </apply>
+                <ci> F </ci>
+                <ci> V_t </ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci> R </ci>
+                <ci> T </ci>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="k4_r_v">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <exp/>
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <minus/>
+                  <ci> eps4_r </ci>
+                </apply>
+                <ci> F </ci>
+                <ci> V_t </ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci> R </ci>
+                <ci> T </ci>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="k5_f_v">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <exp/>
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <minus/>
+                  <ci> eps5_f </ci>
+                </apply>
+                <ci> F </ci>
+                <ci> V_t </ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci> R </ci>
+                <ci> T </ci>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="k5_r_v">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <exp/>
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <minus/>
+                  <ci> eps5_r </ci>
+                </apply>
+                <ci> F </ci>
+                <ci> V_t </ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci> R </ci>
+                <ci> T </ci>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="k6_f_v">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <exp/>
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <minus/>
+                  <ci> eps6_f </ci>
+                </apply>
+                <ci> F </ci>
+                <ci> V_t </ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci> R </ci>
+                <ci> T </ci>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="k6_r_v">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <exp/>
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <minus/>
+                  <ci> eps6_r </ci>
+                </apply>
+                <ci> F </ci>
+                <ci> V_t </ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci> R </ci>
+                <ci> T </ci>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="k7_f_v">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <exp/>
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <minus/>
+                  <ci> eps7_f </ci>
+                </apply>
+                <ci> F </ci>
+                <ci> V_t </ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci> R </ci>
+                <ci> T </ci>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="k7_r_v">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <exp/>
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <minus/>
+                  <ci> eps7_r </ci>
+                </apply>
+                <ci> F </ci>
+                <ci> V_t </ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci> R </ci>
+                <ci> T </ci>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="k8_f_v">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <exp/>
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <minus/>
+                  <ci> eps8_f </ci>
+                </apply>
+                <ci> F </ci>
+                <ci> V_t </ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci> R </ci>
+                <ci> T </ci>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="k8_r_v">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <exp/>
+            <apply>
+              <divide/>
+              <apply>
+                <times/>
+                <apply>
+                  <minus/>
+                  <ci> eps8_r </ci>
+                </apply>
+                <ci> F </ci>
+                <ci> V_t </ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci> R </ci>
+                <ci> T </ci>
+              </apply>
+            </apply>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="net_molar_concentration_ion_influx">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <ci> rxn4 </ci>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="I_t_per_liposome">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <ci> net_molar_concentration_ion_influx </ci>
+            <ci> v_in_lipo </ci>
+            <ci> N_av </ci>
+            <ci> elem_charge </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <rateRule variable="Q_t_per_liposome">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <ci> I_t_per_liposome </ci>
+        </math>
+      </rateRule>
+      <assignmentRule variable="V_t_per_liposome">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <apply>
+              <times/>
+              <ci> V_scale </ci>
+              <ci> Q_t_per_liposome </ci>
+            </apply>
+            <ci> C_m_per_liposome </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="I_t_total">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <ci> I_t_per_liposome </ci>
+            <ci> n_liposomes </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="Q_t_total">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <ci> Q_t_per_liposome </ci>
+            <ci> n_liposomes </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="V_t_total">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <ci> V_t_per_liposome </ci>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="I_t">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <ci> I_t_total </ci>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="transporter_amount">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <times/>
+            <apply>
+              <plus/>
+              <ci> conc_OF </ci>
+              <ci> conc_OF_Hb </ci>
+              <ci> conc_OF_Sb </ci>
+              <ci> conc_IF_Hb </ci>
+              <ci> conc_IF_Sb </ci>
+              <ci> conc_IF_Hb_Sb </ci>
+            </apply>
+            <ci> v_m_lipo </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="H_conc_ratio">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <ci> conc_H_out </ci>
+            <ci> conc_H_in </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+      <assignmentRule variable="S_conc_ratio">
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <apply>
+            <divide/>
+            <ci> conc_S_out </ci>
+            <ci> conc_S_in </ci>
+          </apply>
+        </math>
+      </assignmentRule>
+    </listOfRules>
+    <listOfReactions>
+      <reaction id="rxn1" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="conc_OF" stoichiometry="1" constant="true"/>
+          <speciesReference species="conc_H_out" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="conc_OF_Hb" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <minus/>
+              <apply>
+                <times/>
+                <ci> k1_f </ci>
+                <ci> conc_OF </ci>
+                <ci> conc_H_out </ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci> k1_r </ci>
+                <ci> conc_OF_Hb </ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rxn2" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="conc_OF_Hb" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="conc_IF_Hb" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <minus/>
+              <apply>
+                <times/>
+                <ci> k2_f </ci>
+                <ci> conc_OF_Hb </ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci> k2_r </ci>
+                <ci> conc_IF_Hb </ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rxn3" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="conc_IF_Hb" stoichiometry="1" constant="true"/>
+          <speciesReference species="conc_S_in" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="conc_IF_Hb_Sb" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <minus/>
+              <apply>
+                <times/>
+                <ci> k3_f </ci>
+                <ci> conc_IF_Hb </ci>
+                <ci> conc_S_in </ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci> k3_r </ci>
+                <ci> conc_IF_Hb_Sb </ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rxn4" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="conc_IF_Hb_Sb" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="conc_IF_Sb" stoichiometry="1" constant="true"/>
+          <speciesReference species="conc_H_in" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <minus/>
+              <apply>
+                <times/>
+                <ci> k4_f </ci>
+                <ci> conc_IF_Hb_Sb </ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci> k4_r </ci>
+                <ci> conc_IF_Sb </ci>
+                <ci> conc_H_in </ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rxn5" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="conc_IF_Sb" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="conc_OF_Sb" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <minus/>
+              <apply>
+                <times/>
+                <ci> k5_f </ci>
+                <ci> conc_IF_Sb </ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci> k5_r </ci>
+                <ci> conc_OF_Sb </ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rxn6" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="conc_OF_Sb" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="conc_OF" stoichiometry="1" constant="true"/>
+          <speciesReference species="conc_S_out" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <minus/>
+              <apply>
+                <times/>
+                <ci> k6_f </ci>
+                <ci> conc_OF_Sb </ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci> k6_r </ci>
+                <ci> conc_OF </ci>
+                <ci> conc_S_out </ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rxn7" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="conc_IF_Sb" stoichiometry="1" constant="true"/>
+          <speciesReference species="conc_H_out" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="conc_OF_Hb_Sb" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <minus/>
+              <apply>
+                <times/>
+                <ci> k7_f </ci>
+                <ci> conc_IF_Sb </ci>
+                <ci> conc_H_out </ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci> k7_r </ci>
+                <ci> conc_OF_Hb_Sb </ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+      <reaction id="rxn8" reversible="true" fast="false">
+        <listOfReactants>
+          <speciesReference species="conc_OF_Hb_Sb" stoichiometry="1" constant="true"/>
+        </listOfReactants>
+        <listOfProducts>
+          <speciesReference species="conc_OF_Hb" stoichiometry="1" constant="true"/>
+          <speciesReference species="conc_S_out" stoichiometry="1" constant="true"/>
+        </listOfProducts>
+        <kineticLaw>
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+              <minus/>
+              <apply>
+                <times/>
+                <ci> k8_f </ci>
+                <ci> conc_OF_Hb_Sb </ci>
+              </apply>
+              <apply>
+                <times/>
+                <ci> k8_r </ci>
+                <ci> conc_OF_Hb </ci>
+                <ci> conc_S_out </ci>
+              </apply>
+            </apply>
+          </math>
+        </kineticLaw>
+      </reaction>
+    </listOfReactions>
+  </model>
+</sbml>

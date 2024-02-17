@@ -1,12 +1,11 @@
-run_name: "antiporter_1_1_12D_cycle1_experiment1_0v"
-data_file: "./example/model1_experiment1_current_trace.csv"
-model_file: "./example/antiporter_1_1_cycle1_0v_SBML.xml"
+run_name: ""
+data_file: ""
+model_file: ""
 random_seed: 42
 
 solver_arguments:
   buffer_species_names: ["conc_H_out", "conc_S_out"]
-  buffer_concentration_sequence: [[1.e-7,1.e-3],[0.5e-7,1.0e-3],[1.e-7,1.e-3], 
-                              ]
+  buffer_concentration_sequence: []
   buffer_concentration_scale: [1,1]
   time_per_stage: 1
   n_points_per_stage: 200
@@ -22,10 +21,10 @@ solver_arguments:
 
 
 bayesian_inference:
-  extended: False
+  extended: True
   parameters:
     - name: "log10_k1_f"
-      bounds: [6.0,12]
+      bounds: [6,12]
       nominal: 10
     - name: "log10_k1_r"
       bounds: [-1, 5]
@@ -57,6 +56,18 @@ bayesian_inference:
     - name: "log10_k6_f"
       bounds: [-1,5]
       nominal: 3
+    - name: "H_out_scale"
+      bounds: [0.8,1.2]
+      nominal: 1
+    - name: "S_out_scale"
+      bounds: [0.8,1.2]
+      nominal: 1
+    - name: "protein_conc_scale"
+      bounds: [0.8,1.2]
+      nominal: 1
+    - name: "bias_scale"
+      bounds: [0.8,1.2]
+      nominal: 1
     - name: "log10_sigma"
       bounds: [-11, -9]
       nominal: -10.5
@@ -68,13 +79,13 @@ bayesian_inference:
     thin: 10
     burn_in: 5000
     ess: 0.95
-    gamma: 0.75
+    gamma: 0.70
     additional_samples: 2000
     n_max: 1000
 
 optimization:
   tuning: True
   n_tuning_steps: 10
-  method: "direct" 
+  method: "differential_evolution" 
   n_replicas: 10
 

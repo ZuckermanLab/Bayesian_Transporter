@@ -1,0 +1,131 @@
+  
+// Created by libAntimony v2.12.0
+model antiporter_1_1_cycle1()
+
+# 1:1 antiporter transporter model, August George, 2023
+
+########## Initialization (general) ##########
+# physical constants:
+const elem_charge = 1.602e-19;  # Coulombs
+const N_av = 6.022e23;  # N particles/mole
+
+# experimental parameters:
+const n_liposomes = 1e11;  # counts (not moles)
+const avg_liposome_diameter = 1e-7; # in meters
+const n_transporters = 1e13/2;  # counts (not moles)
+const n_transporters_per_liposome := n_transporters/n_liposomes;  # counts (not moles)
+
+# compartments (totals):
+const v_out_tot = 7e-5; # total external volume in liters 
+const v_m_tot = 1.9e-8; # total membrane volume in liters 
+const v_in_tot = 7e-8; # total internal volume in liters 
+const v_out_lipo := v_out_tot/n_liposomes; # external volume per lipsome in liters 
+const v_m_lipo := v_m_tot/n_liposomes; # membrane volume per lipsome in liters 
+const v_in_lipo := v_in_tot/n_liposomes; # internal volume per lipsome in liters 
+
+# initial external ion (H_out) concentration (mol/L) and amounts (mol) 
+conc_H_out_0 = 1e-7;  # moles/L
+species conc_H_out = conc_H_out_0;  # default unit type is substance / volume 
+
+# initial external substrate (S_out) concentration (mol/L) and amounts (mol) 
+conc_S_out_0 = 1e-3;  # moles/L
+species conc_S_out = conc_S_out_0;
+
+# initial internal ion (H_in) concentration (mol/L) and amounts (mol) 
+conc_H_in_0 = 1e-7;  # moles/L
+species conc_H_in = conc_H_in_0;
+
+# initial internal substrate (S_in) concentration (mol/L) and amounts (mol) 
+conc_S_in_0 = 1e-3;  # moles/L
+species conc_S_in = conc_S_in_0;
+
+# initial transporter protein concentration and counts
+mol_transporters_tot_0 := (n_transporters/N_av);
+mol_transporters_lipo_0 := (n_transporters_per_liposome/N_av);
+conc_transporters_tot_0 := mol_transporters_tot_0/v_m_tot;
+conc_transporters_lipo_0 := mol_transporters_lipo_0/v_m_lipo;
+
+
+########## Initialization (model specific) ##########
+# using single liposome concentration (same as total liposomes)
+species conc_OF = conc_transporters_lipo_0;  # start all proteins in the 'OF' state
+species conc_OF_Hb = 0; 
+species conc_IF_Hb = 0; 
+species conc_IF = 0;
+species conc_IF_Sb = 0;
+species conc_OF_Sb = 0;
+
+
+########## Reactions (model specific) ##########
+# note: H_out and S_out are constant (using $ prefix)
+rxn1: conc_OF + $conc_H_out -> conc_OF_Hb; (k1_f*conc_OF*conc_H_out - k1_r*conc_OF_Hb);
+rxn2: conc_OF_Hb -> conc_IF_Hb; (k2_f*conc_OF_Hb - k2_r*conc_IF_Hb);
+rxn3: conc_IF_Hb -> conc_IF + conc_H_in; (k3_f*conc_IF_Hb - k3_r*conc_IF*conc_H_in);
+rxn4: conc_IF + conc_S_in -> conc_IF_Sb; (k4_f*conc_IF*conc_S_in - k4_r*conc_IF_Sb);
+rxn5: conc_IF_Sb -> conc_OF_Sb; (k5_f*conc_IF_Sb - k5_r*conc_OF_Sb);
+rxn6: conc_OF_Sb -> conc_OF + $conc_S_out; (k6_f*conc_OF_Sb - k6_r*conc_OF*conc_S_out);
+
+
+########## Events (optional, not used in current implementation) ##########
+#const conc_H_act = 5e-7; # mole/liter
+#const conc_S_act = 1e-3; # mole/liter
+#E1: at (time >= 1 && time < 2): conc_H_out = conc_H_act, conc_S_out = conc_S_act;
+#E2: at (time >= 2): conc_H_out = 1e-7, conc_S_out = 1e-3;
+
+
+########## Rate constant initialization (model specific) ##########
+# base reaction rate constants (without membrane voltage adjustment)
+const k1_f_0 = 1e10; # L/(mol*s)
+const k1_r_0 = 1e3; # 1/s
+const k2_f_0 = 1e2; # 1/s
+const k2_r_0 = 1e2; # 1/s
+const k3_f_0 = 1e3; # 1/s
+const k3_r_0 = 1e10; # L/(mol*s)
+const k4_f_0 = 1e7; # L/(mol*s)
+const k4_r_0 = 1e3; # 1/s
+const k5_f_0 = 1e2; # 1/s
+const k5_r_0 = 1e2; # 1/s
+
+# base rate constant cycle constraint
+const k6_f_0 = 1e3; # 1/s 
+const k6_r_0 := (k1_f_0*k2_f_0*k3_f_0*k4_f_0*k5_f_0*k6_f_0)/(k1_r_0*k2_r_0*k3_r_0*k4_r_0*k5_r_0);  # 1e7, L/(mol*s)
+
+# effective reaction rate constants (with membrane voltage adjustment)
+# currently using a place-holder function exp(0)=1
+k1_f := k1_f_0*exp(0); 
+k1_r := k1_r_0*exp(0);
+k2_f := k2_f_0*exp(0);
+k2_r := k2_r_0*exp(0);
+k3_f := k3_f_0*exp(0);
+k3_r := k3_r_0*exp(0);
+k4_f := k4_f_0*exp(0);
+k4_r := k4_r_0*exp(0);
+k5_f := k5_f_0*exp(0);
+k5_r := k5_r_0*exp(0);
+
+# effective rate constant cycle constraint 
+k6_f := k6_f_0*exp(0);
+k6_r := (k1_f*k2_f*k3_f*k4_f*k5_f*k6_f)/(k1_r*k2_r*k3_r*k4_r*k5_r);
+
+
+########## Output (model specific) ##########
+var net_ion_influx := rxn3; # mol/(L*s)
+var transporter_amount := (conc_OF + conc_OF_Hb + conc_OF_Sb + conc_IF_Hb + conc_IF_Sb + conc_IF)*v_m_lipo; // in moles
+var H_conc_ratio := conc_H_out/conc_H_in;
+var S_conc_ratio := conc_S_out/conc_S_in;
+var I_t_per_liposome := net_ion_influx*v_in_lipo*N_av*elem_charge;  # C / s = A
+var I_t_total := I_t_per_liposome*n_liposomes;  # C / s = A
+
+
+########## Unit definitions ##########
+unit substance_per_volume = mole / litre;
+unit volume = litre;
+unit length = metre;
+unit area = metre^2;
+unit time_unit = second;
+unit substance = mole;
+unit extent = mole;
+
+########## Display Names ##########
+time_unit is "time";
+end

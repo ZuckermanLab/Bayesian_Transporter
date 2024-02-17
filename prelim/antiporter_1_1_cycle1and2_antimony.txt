@@ -1,0 +1,194 @@
+  
+// Created by libAntimony v2.12.0
+model antiporter_1_1_cycle1()
+
+# 1:1 antiporter transporter model, August George, 2023
+
+########## Initialization (general) ##########
+# physical constants:
+const elem_charge = 1.602e-19;  # Coulombs
+const N_av = 6.022e23;  # N particles/mole
+const F = 96485;  # Faraday's constant, in C/mol
+const R = 8.314;  # Gas constant in J/(mol K)
+const T = 298.15;  # room temperature in Kelvin
+
+# experimental parameters:
+var n_liposomes = 1e11;  # counts (not moles)
+var multimeric_state = 2; # monomer=1, dimer=2, trimer=3, ...
+var n_transporters := 1e13/multimeric_state;  # counts (not moles). 
+var C_m_per_liposome := 2.3561925e-16;  #C_m = specific capacitance * area ~ 0.005 F/m^2 * 4.5e-14 m^2
+var V_scale = 1.0;  # factor to scale voltage by (can be changed during Bayesian inference)
+
+# derived quantities
+var n_transporters_per_liposome := n_transporters/n_liposomes;  # counts (not moles)
+var C_m_tot := C_m_per_liposome*n_liposomes;
+
+# compartments (model / experiment specific):
+const v_out_tot = 7e-5; # total external volume in liters (10 uL protein + 60 uL buffer)
+const v_m_tot = 1.9e-8; # total membrane volume in liters (volume of ~10 nm thick liposome membrane * 1e11 transporters)
+const v_in_tot = 7e-8; # total internal volume in liters (volume of 110 nm diameter liposome sphere * 1e11 transporters)
+var v_out_lipo := v_out_tot/n_liposomes;  # average external volume around liposome in liters
+var v_m_lipo :=  v_m_tot/n_liposomes; # average liposome membrane volume in liters 
+var v_in_lipo := v_in_tot/n_liposomes; # average liposome internal volume in liters 
+
+# initial species concentrations
+conc_H_out_0 = 1e-7;  # moles/L
+conc_S_out_0 = 1e-3;  # moles/L
+conc_H_in_0 = 1e-7;  # moles/L
+conc_S_in_0 = 1e-3;  # moles/L
+species conc_H_out = conc_H_out_0; 
+species conc_S_out = conc_S_out_0;
+species conc_H_in = conc_H_in_0;
+species conc_S_in = conc_S_in_0;
+
+# initial transporter protein concentration and counts
+mol_transporters_tot_0 := (n_transporters/N_av);
+mol_transporters_lipo_0 := (n_transporters_per_liposome/N_av);
+conc_transporters_tot_0 := mol_transporters_tot_0/v_m_tot;
+conc_transporters_lipo_0 := mol_transporters_lipo_0/v_m_lipo;
+
+
+########## Initialization (model specific) ##########
+# using single liposome concentration (same as total liposomes with uniform liposome assumption)
+species conc_OF = conc_transporters_lipo_0;  # start all proteins in the 'OF' state
+species conc_OF_Hb = 0; 
+species conc_IF_Hb = 0; 
+species conc_IF_Hb_Sb = 0;
+species conc_IF_Sb = 0;
+species conc_OF_Sb = 0;
+species conc_OF_Hb_Sb = 0;
+
+########## Reactions (model specific) ##########
+# note: H_out and S_out are constant (using $ prefix)
+rxn1: conc_OF + $conc_H_out -> conc_OF_Hb; (k1_f*conc_OF*conc_H_out - k1_r*conc_OF_Hb);
+rxn2: conc_OF_Hb -> conc_IF_Hb; (k2_f*conc_OF_Hb - k2_r*conc_IF_Hb);
+rxn3: conc_IF_Hb + conc_S_in -> conc_IF_Hb_Sb; (k3_f*conc_IF_Hb*conc_S_in - k3_r*conc_IF_Hb_Sb);
+rxn4: conc_IF_Hb_Sb -> conc_IF_Sb + conc_H_in; (k4_f*conc_IF_Hb_Sb - k4_r*conc_IF_Sb*conc_H_in);
+rxn5: conc_IF_Sb -> conc_OF_Sb; (k5_f*conc_IF_Sb - k5_r*conc_OF_Sb);
+rxn6: conc_OF_Sb -> conc_OF + $conc_S_out; (k6_f*conc_OF_Sb - k6_r*conc_OF*conc_S_out);
+
+# cycle 2
+rxn7: conc_IF_Sb + $conc_H_out -> conc_OF_Hb_Sb; (k7_f*conc_IF_Sb*conc_H_out - k7_r*conc_OF_Hb_Sb);
+rxn8: conc_OF_Hb_Sb -> conc_OF_Hb + $conc_S_out; (k8_f*conc_OF_Hb_Sb - k8_r*conc_OF_Hb*conc_S_out);
+
+########## Events (optional, not used in current implementation) ##########
+#var conc_H_act = 0.5e-7; # mole/liter
+#var conc_S_act = 1e-3; # mole/liter
+#E1: at (time >= 1 && time < 2): conc_H_out = conc_H_act, conc_S_out = conc_S_act;
+#E2: at (time >= 2): conc_H_out = 1e-7, conc_S_out = 1e-3;
+
+
+########## Rate constant initialization (model specific) ##########
+# base reaction rate constants (without membrane voltage adjustment)
+const k1_f_0 = 1e10; # L/(mol*s)
+const k1_r_0 = 1e3; # 1/s
+const k2_f_0 = 1e2; # 1/s
+const k2_r_0 = 1e2; # 1/s
+const k3_f_0 = 1e7; # L/(mol*s)
+const k3_r_0 = 1e3; # 1/s
+const k4_f_0 = 1e3; # 1/s
+const k4_r_0 = 1e10; # L/(mol*s)
+const k5_f_0 = 1e2; # 1/s
+const k5_r_0 = 1e2; # 1/s
+const k6_f_0 = 1e3; # 1/s 
+
+const k7_f_0 = 1e10; # L/(mol*s)
+const k8_f_0 = 1e3; # 1/s 
+const k8_r_0 = 1e7; # L/(mol*s)
+
+
+# fractional charge moved
+eps1_f = 0;
+eps1_r = 0;
+eps2_f = 0;
+eps2_r = 0;
+eps3_f = 0;
+eps3_r = 0;
+eps4_f = 1;  # all charge moved during reaction 4
+eps4_r = -1;
+eps5_f = 0;
+eps5_r = 0;
+eps6_f = 0;
+eps6_r = 0;
+
+eps7_f = 0;
+eps7_r = 0;
+eps8_f = 0;
+eps8_r = 0;
+
+#  membrane voltage adjustment for rate constants (only rxn4)
+k1_f_v := exp(-eps1_f*F*V_t/(R*T));
+k1_r_v := exp(-eps1_r*F*V_t/(R*T));
+k2_f_v := exp(-eps2_f*F*V_t/(R*T));
+k2_r_v := exp(-eps2_r*F*V_t/(R*T));
+k3_f_v := exp(-eps3_f*F*V_t/(R*T));
+k3_r_v := exp(-eps3_r*F*V_t/(R*T));
+k4_f_v := exp(-eps4_f*F*V_t/(R*T));
+k4_r_v := exp(-eps4_r*F*V_t/(R*T));
+k5_f_v := exp(-eps5_f*F*V_t/(R*T));
+k5_r_v := exp(-eps5_r*F*V_t/(R*T));
+k6_f_v := exp(-eps6_f*F*V_t/(R*T));
+k6_r_v := exp(-eps6_r*F*V_t/(R*T));
+
+k7_f_v := exp(-eps7_f*F*V_t/(R*T));
+k7_r_v := exp(-eps7_r*F*V_t/(R*T));
+k8_f_v := exp(-eps8_f*F*V_t/(R*T));
+k8_r_v := exp(-eps8_r*F*V_t/(R*T));
+
+# adjusted rate constants
+k1_f := k1_f_0*k1_f_v; 
+k1_r := k1_r_0*k1_r_v;
+k2_f := k2_f_0*k2_f_v;
+k2_r := k2_r_0*k2_r_v;
+k3_f := k3_f_0*k3_f_v;
+k3_r := k3_r_0*k3_r_v;
+k4_f := k4_f_0*k4_f_v;
+k4_r := k4_r_0*k4_r_v;
+k5_f := k5_f_0*k5_f_v;
+k5_r := k5_r_0*k5_r_v;
+k6_f := k6_f_0*k6_f_v;
+
+k7_f := k7_f_0*k7_f_v;
+k8_f := k8_f_0*k8_f_v;
+k8_r := k8_r_0*k8_r_v;
+
+# effective rate constant cycle constraint 
+k6_r := (k1_f*k2_f*k3_f*k4_f*k5_f*k6_f)/(k1_r*k2_r*k3_r*k4_r*k5_r);
+k7_r := (k8_f*k2_f*k3_f*k4_f*k5_f*k7_f)/(k8_r*k2_r*k3_r*k4_r*k5_r);
+
+########## Output (model specific) ##########
+var net_molar_concentration_ion_influx := rxn4; # mol/(L*s)
+
+# current, charge, and voltage (per liposome)
+var I_t_per_liposome := net_molar_concentration_ion_influx*v_in_lipo*N_av*elem_charge;  # C / s = A
+var Q_t_per_liposome  = 0.0;
+var Q_t_per_liposome' = I_t_per_liposome;  # Q = integral I(t). --> derivative integral I(t) = I(t)
+var V_t_per_liposome := V_scale*Q_t_per_liposome/C_m_per_liposome;  # membrane voltage, in volts, scaled by a factor V_scale
+
+# current, charge, and voltage (total)
+var I_t_total := I_t_per_liposome*n_liposomes;  # C / s = A
+var Q_t_total := Q_t_per_liposome*n_liposomes;  # in Coulumbs
+var V_t_total := V_t_per_liposome;  # membrane voltage, in volts. Assumes voltage drop across 1 liposome = voltage drop across all liposomes
+
+# results to use 
+var V_t := 0; #V_t_per_liposome;  
+var I_t := I_t_total;
+
+# for sanity checks
+var transporter_amount := (conc_OF + conc_OF_Hb + conc_OF_Sb + conc_IF_Hb + conc_IF_Sb + conc_IF_Hb_Sb)*v_m_lipo; # should be constant, in moles (per liposome)
+var H_conc_ratio := conc_H_out/conc_H_in;  # H and S concentration ratios should equal at equilibrium
+var S_conc_ratio := conc_S_out/conc_S_in;
+
+
+########## Unit definitions ##########
+unit substance_per_volume = mole / litre;
+unit volume = litre;
+unit length = metre;
+unit area = metre^2;
+unit time_unit = second;
+unit substance = mole;
+unit extent = mole;
+
+########## Display Names ##########
+time_unit is "time";
+end

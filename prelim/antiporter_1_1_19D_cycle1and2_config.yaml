@@ -1,0 +1,104 @@
+run_name: "antiporter_1_1_19D_cycle1on2low_experiment1and2and3and4_0v_MLE_differential_evolution"
+data_file: "/Users/georgeau/Desktop/GitHub/phd_thesis/code/synthetic_data/model1on2low_experiment1and2and3and4_current_trace.csv"
+model_file: "/Users/georgeau/Desktop/GitHub/phd_thesis/code/models/antiporter_1_1_cycle1and2_0v_SBML.xml"
+random_seed: 42
+
+solver_arguments:
+  buffer_species_names: ["conc_H_out", "conc_S_out"]
+  buffer_concentration_sequence: [[1.e-7,1.e-3],[0.5e-7,1.0e-3],[1.e-7,1.e-3],[0.5e-7,0.5e-3],[1.e-7,1.e-3],[0.5e-7,0.353e-3],[1.e-7,1.e-3],[0.5e-7,0.25e-3],[1.e-7,1.e-3]]
+  buffer_concentration_scale: [1,1]
+  time_per_stage: 1
+  n_points_per_stage: 200
+  remove_first_n: 1
+  remove_after_n: 100
+  rate_constant_names: ["k1_f_0", "k1_r_0", "k2_f_0", "k2_r_0", "k3_f_0", "k3_r_0", "k4_f_0", "k4_r_0", "k5_f_0", "k5_r_0", "k6_f_0", "k7_f_0", "k8_f_0", "k8_r_0"]
+  species_labels: ["conc_OF", "conc_OF_Hb", "conc_IF_Hb", "conc_IF_Hb_Sb", "conc_IF_Sb", "conc_OF_Sb", "conc_OF_Hb_Sb", "conc_H_in", "conc_S_in"]
+  species_initial_concentrations: [ 0.0004369941792375325, 0, 0, 0, 0, 0, 0, 1.e-7, 1.e-3]
+  species_initial_concentrations_scale: [1, 1, 1, 1, 1, 1, 1, 1, 1]
+  solver_absolute_tolerance: 1.e-15
+  solver_relative_tolerance: 1.e-12
+  roadrunner_solver_output_selections: ["time","I_t_total"]
+
+
+bayesian_inference:
+  extended: True
+  parameters:
+    - name: "log10_k1_f"
+      bounds: [6,12]
+      nominal: 10
+    - name: "log10_k1_r"
+      bounds: [-1, 5]
+      nominal: 3
+
+    - name: "log10_k2_f"
+      bounds: [-2, 4]
+      nominal: 2
+    - name: "log10_k2_r"
+      bounds: [-2, 4]
+      nominal: 2
+    - name: "log10_k3_f"
+      bounds: [3,9]
+      nominal: 7
+    - name: "log10_k3_r"
+      bounds: [-1, 5]
+      nominal: 3
+    - name: "log10_k4_f"
+      bounds: [-1, 5]
+      nominal: 3
+    - name: "log10_k4_r"
+      bounds: [6,12]
+      nominal: 10
+    - name: "log10_k5_f"
+      bounds: [-2,4]
+      nominal: 2
+    - name: "log10_k5_r"
+      bounds: [-2,4]
+      nominal: 2
+
+    - name: "log10_k6_f"
+      bounds: [-1,5]
+      nominal: 3
+
+    - name: "log10_k7_f"
+      bounds: [6,12]
+      nominal: 6.1
+    - name: "log10_k8_f"
+      bounds: [-1,5]
+      nominal: -0.9
+    - name: "log10_k8_r"
+      bounds: [3,9]
+      nominal: 3.1
+
+    - name: "H_out_scale"
+      bounds: [0.8,1.2]
+      nominal: 1
+    - name: "S_out_scale"
+      bounds: [0.8,1.2]
+      nominal: 1
+    - name: "protein_conc_scale"
+      bounds: [0.8,1.2]
+      nominal: 1
+    - name: "bias_scale"
+      bounds: [0.8,1.2]
+      nominal: 1
+    - name: "log10_sigma"
+      bounds: [-11, -9]
+      nominal: -10.5
+      
+  mcmc_algorithm: "pocomc" # "pocomc" or "emcee"
+  mcmc_algorithm_arguments:
+    n_walkers: 1000
+    n_steps: 10000
+    thin: 10
+    burn_in: 5000
+    ess: 0.95
+    gamma: 0.675
+    additional_samples: 2000
+    n_max: 1000
+
+optimization:
+  tuning: True
+  n_tuning_steps: 10
+  method: "differential_evolution" 
+  n_replicas: 10
+
